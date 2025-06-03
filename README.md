@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CSV Importer com Matching Inteligente de Colunas
 
-## Getting Started
+Este projeto implementa um sistema de importação de CSV que utiliza IA para fazer o matching automático entre as colunas do arquivo CSV e um esquema de dados predefinido.
 
-First, run the development server:
+## Como Funciona
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. Interface do Usuário (`page.tsx`)
+- **Upload de arquivo**: Interface permite selecionar arquivos CSV
+- **Parse do CSV**: Utiliza Papa Parse para processar o arquivo
+- **Envio para API**: Envia as colunas do CSV + amostras de dados para análise
+- **Aplicação do mapping**: Recebe o mapeamento e aplica aos dados para exibição
+
+### 2. API de Matching (`/api/match-columns/route.ts`)
+- **Recebe dados**: Colunas do CSV, linhas de exemplo e esquema esperado
+- **IA para matching**: Usa OpenAI GPT-4o-mini para analisar e mapear colunas
+- **Retorna mapeamento**: JSON com correspondência entre colunas CSV → esquema padrão
+
+## Fluxo de Dados
+
+```
+CSV Upload → Parse → API Call → OpenAI Analysis → Column Mapping → Data Display
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Exemplo de Mapping
+```json
+{
+  "nome": "firstName",
+  "sobrenome": "lastName", 
+  "email": "email"
+}
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Esquema Padrão
+O sistema espera dados com as seguintes colunas:
+- `firstName` (First Name)
+- `lastName` (Last Name) 
+- `email` (Email)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+A IA automaticamente identifica qual coluna do CSV corresponde a cada campo esperado, mesmo com nomes diferentes ou em outros idiomas.
