@@ -1,5 +1,5 @@
-import { OpenAI } from 'openai'
 import type { NextRequest } from 'next/server'
+import { OpenAI } from 'openai'
 
 export async function POST(req: NextRequest) {
   const { fileCols, firstRows, columns } = await req.json()
@@ -20,10 +20,14 @@ export async function POST(req: NextRequest) {
     model: 'gpt-4o-mini',
     messages: [
       { role: 'system', content: 'You write JSON only, no explanations.' },
-      { role: 'user',   content: prompt }
+      { role: 'user', content: prompt },
     ],
-    response_format: { type: 'json_object' }
+    response_format: { type: 'json_object' },
   })
 
-  return Response.json({ mapping: JSON.parse(chat.choices[0].message.content!) })
+  const mapping = JSON.parse(chat.choices[0].message.content ?? '{}')
+
+  return Response.json({
+    mapping,
+  })
 }
