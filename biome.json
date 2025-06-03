@@ -30,13 +30,35 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "style": {
+        "useNamingConvention": {
+          "level": "error",
+          "fix": "safe",
+          "options": {
+            "conventions": [
+              {
+                "selector": {
+                  "kind": "variable"
+                },
+                "formats": ["camelCase", "CONSTANT_CASE"]
+              }
+            ]
+          }
+        },
+        "useFilenamingConvention": {
+          "level": "error",
+          "options": {
+            "filenameCases": ["kebab-case"]
+          }
+        }
+      },
       "nursery": {
         "useSortedClasses": {
           "level": "error",
           "fix": "safe",
           "options": {
             "attributes": ["class", "className"],
-            "functions": ["clsx", "cn", "cva", "tw"]
+            "functions": ["clsx", "cn", "cva", "tw", "twMerge"]
           }
         }
       }
