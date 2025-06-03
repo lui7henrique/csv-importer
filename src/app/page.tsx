@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { cn } from '@/lib/utils'
 import Papa from 'papaparse'
 import { useState } from 'react'
 
@@ -120,12 +121,16 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen max-w-md mx-auto gap-4">
+    <div
+      className={cn(
+        'mx-auto flex h-screen max-w-md flex-col items-center justify-center gap-4'
+      )}
+    >
       <div className="flex gap-2">
         <Input
           type="file"
           accept=".csv"
-          className="border rounded-md"
+          className="rounded-md border"
           placeholder="Select a CSV file"
           onChange={onFile}
           disabled={isLoading}
